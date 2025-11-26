@@ -12,7 +12,7 @@ class PuserController extends Controller
      */
     public function index()
     {
-        return view('puser.index');
+        return view('pusers.index');
     }
 
     /**
@@ -20,7 +20,7 @@ class PuserController extends Controller
      */
     public function create()
     {
-        return view('puser.create');
+        return view('pusers.create');
     }
 
     /**
@@ -39,7 +39,7 @@ class PuserController extends Controller
      */
     public function show(Puser $puser)
     {
-        //
+        return view('pusers.show');
     }
 
     /**
@@ -47,7 +47,8 @@ class PuserController extends Controller
      */
     public function edit(Puser $puser)
     {
-        //
+        return view('pusers.edit');
+    
     }
 
     /**
