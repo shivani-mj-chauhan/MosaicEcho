@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Puser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class PuserController extends Controller
 {
@@ -28,10 +30,26 @@ class PuserController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'pusername' => 'required'
+        $puser = $request->validate([
+            'name' => 'required|string',
+            'pusername' => 'required|string|unique:pusername',
+            'email' => 'required|email',
+            'profile' => 'nullable|image|mimes:jpeg,jpg,png',
+            'password' => 'required|confirmed|min:4',
         ]);
+
+        $profileName = null;
+
+        if($request->hasFile(profile)){
+            $profile = $request->file('profile');
+            $profileName = time().'_'.$request->file('profile')->getClientOriginalName();
+            $profile->move(public_path('profiles/'), $profileName);
+            $puser['profile'] = $profileName;
+        }
+
+        $puser['slug'] = \Str::slug($request->name, '-');
+
+        session(['pending_puser' => $puser]);
     }
 
     /**

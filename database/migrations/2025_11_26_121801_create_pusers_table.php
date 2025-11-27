@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('profile')->nullable();
             $table->string('password');
+            $table->boolean('is_verify')->default(false);
             $table->string('slug')->unique();
             $table->timestamps();
         });
